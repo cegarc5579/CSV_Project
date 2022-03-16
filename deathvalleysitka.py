@@ -14,6 +14,7 @@ for index, column_header in enumerate(header_row):
 highs = []
 lows = []
 dates = []
+indexes = []
 
 # sitka temps
 weather2 = open("sitka_weather_2018_simple.csv", "r")
