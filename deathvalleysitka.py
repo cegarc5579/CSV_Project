@@ -1,26 +1,33 @@
 import csv
 from datetime import datetime
 import matplotlib.pyplot as plt
-
+#had to input this in order for both of the files to be 'combined' into one
+#would not work if i tried to do two separate statements
 temps = ["sitka_weather_2018_simple.csv","death_valley_2018_simple.csv"]
-
+#creating a list for the title to be stored in 
+#as well as creating the subplots 
 name1 = []
 caption = "Temperature comparison between"
 fig, ax = plt.subplots(2)
 
 for t in range(len(temps)):
+    #create the empty lists for the information going on the charts
     highs = []
     lows = []
     dates = []
     indexes = {}
-
+    #this opens the file that we created in the beginning
+    #when we merged the two csv's into one file for practical use
     temperature = open(temps[t], 'r')
     temp_file = csv.reader(temperature, delimiter=",")
     header_row = next(temp_file)
 
     for index, column_header in enumerate(header_row):
         indexes[column_header] = index
-    
+    #in order for them to not be hard coded, we had to set them to TMAX and TMIN 
+    #so that they would be able to work no matter which file is being used
+    #if we hard code the index number, then it might change and it would not work if hard coded in 
+      
     for row in temp_file:
         try:
             high = int(row[indexes["TMAX"]])
@@ -37,7 +44,7 @@ for t in range(len(temps)):
             dates.append(current_date)
 
     temperature.close
-
+#plotting both supblots, and filling between with a blue facecolor that is slightly transparent
     ax[t].plot(dates, highs, c = 'red')
     ax[t].plot(dates,lows, c = 'blue')
     ax[t].fill_between(dates,highs,lows, facecolor='blue',alpha=0.25)
